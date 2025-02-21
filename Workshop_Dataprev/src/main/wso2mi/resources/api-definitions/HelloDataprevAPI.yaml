@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: HelloDataprevAPI
+  description: API Definition of HelloDataprevAPI
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/hello-dataprev
+paths:
+  /welcome:
+    get:
+      responses:
+        default:
+          description: Default response

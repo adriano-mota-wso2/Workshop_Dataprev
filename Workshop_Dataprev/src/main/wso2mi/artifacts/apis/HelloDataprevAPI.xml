@@ -1,0 +1,11 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="HelloDataprevAPI" context="/hello-dataprev">
+    <resource methods="GET" uri-template="/welcome">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>{"message": "Hello Dataprev. Welcome to the WSO2 Workshop"}</format>
+                <args/>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>
