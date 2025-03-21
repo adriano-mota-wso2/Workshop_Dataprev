@@ -1,0 +1,20 @@
+{
+  "/Users/adrianomota/workspace/workshops/integration-samples/micro-integrator/ContentBasedRouting/src/test/wso2mi/ArithmaticOperationServiceTest.xml": {
+    "deploymentStatus": "PASSED",
+    "mediationStatus": "PASSED",
+    "currentTestCase": "Operation_Divide",
+    "testCases": [
+      {
+        "testCaseName": "Operation_Add",
+        "mediationStatus": "PASSED",
+        "assertionStatus": "PASSED"
+      },
+      {
+        "testCaseName": "Operation_Divide",
+        "mediationStatus": "PASSED",
+        "assertionStatus": "PASSED"
+      }
+    ]
+  },
+  "Time elapsed (ms)": 6397
+}
