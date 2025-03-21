@@ -1,0 +1,41 @@
+{
+  "$schema": "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "type": "object",
+  "title": "root",
+  "properties": {
+    "ID": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "sendNotificationEmail": {
+      "type": "string"
+    },
+    "convertedStatus": {
+      "type": "string"
+    },
+    "doNotCreateOpportunity": {
+      "type": "string"
+    },
+    "opportunityName": {
+      "type": "string"
+    },
+    "overwriteLeadSource": {
+      "type": "string"
+    },
+    "sessionId": {
+      "type": "string"
+    }
+  },
+  "inputType": "JSON"
+}

@@ -1,0 +1,9 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="TransformPayloadAPI" context="/transform">
+    <resource methods="POST" uri-template="/data">
+        <inSequence>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <datamapper config="gov:/datamapper/TransformMapping/TransformMapping.dmc" inputSchema="gov:/datamapper/TransformMapping/TransformMapping_inputSchema.json" inputType="JSON" outputSchema="gov:/datamapper/TransformMapping/TransformMapping_outputSchema.json" outputType="JSON"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts>
+  <artifact name="gov_datamapper_TransformMapping_TransformMapping_dmc" groupId="com.microintegrator.projects" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+    <item>
+      <file>TransformMapping.dmc</file>
+      <path>/_system/governance/datamapper/TransformMapping</path>
+      <mediaType>text/plain</mediaType>
+      <properties></properties>
+    </item>
+  </artifact>
+  <artifact name="gov_datamapper_TransformMapping_TransformMapping_inputSchema_json" groupId="com.microintegrator.projects" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+    <item>
+      <file>TransformMapping_inputSchema.json</file>
+      <path>/_system/governance/datamapper/TransformMapping</path>
+      <mediaType>text/plain</mediaType>
+      <properties></properties>
+    </item>
+  </artifact>
+  <artifact name="gov_datamapper_TransformMapping_TransformMapping_outputSchema_json" groupId="com.microintegrator.projects" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+    <item>
+      <file>TransformMapping_outputSchema.json</file>
+      <path>/_system/governance/datamapper/TransformMapping</path>
+      <mediaType>text/plain</mediaType>
+      <properties/>
+    </item>
+  </artifact>
+</artifacts>

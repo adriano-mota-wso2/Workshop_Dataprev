@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="RabbitMQSenderAPI" context="/sendToQueue">
+    <resource methods="POST" uri-template="/message">
+        <inSequence>
+            <property name="message" expression="json-eval($.message)" scope="default" type="STRING"/>
+            <sequence key="SendMessageToQueue"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+  title: PhoneVerificationAPI
+  description: API Definition of PhoneVerificationAPI
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/phoneVerify
+paths:
+  /verify:
+    get:
+      parameters:
+      - name: phoneNumber
+        in: query
+        schema:
+          type: string
+      - name: licenseKey
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
