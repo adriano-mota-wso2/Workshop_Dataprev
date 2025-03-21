@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="ReadFileSequence"  trace="disable"  xmlns="http://ws.apache.org/ns/synapse">
+	<dataServiceCall description="Saida do DS" serviceName="FileDataService">
+        <operations type="single">
+            <operation name="ReadFile">
+			</operation>
+		</operations>
+		<source type="inline"/>
+		<target type="body"/>
+	</dataServiceCall>
+	
+	<iterate expression="//*[local-name()='Cliente']" id="itr" sequential="true">
+		<target>
+			<sequence>
+				<payloadFactory media-type="json">
+				<format> { <!--
+						"id": "$1", 
+						"matricula": "$2",
+						"tipoDocumento": "$3",
+						--> "nome": "$1", "cpfCnpj": "$2", "email": "$3", "cep": "$4", "logradouro": "$5", "numeroLogradouro": "$6", "complemento": "$7", "bairro": "$8", "cidade": "$9", "uf": "$10" } </format>
+				<args>
+						<arg evaluator="xml" expression="//*[local-name()='nome']"/>
+						<arg evaluator="xml" expression="//*[local-name()='numeroDocumento']"/>
+						<arg evaluator="xml" expression="//*[local-name()='email']"/>
+						<arg evaluator="xml" expression="//*[local-name()='endereco.cep']"/>
+						<arg evaluator="xml" expression="//*[local-name()='endereco.logradouro']"/>
+						<arg evaluator="xml" expression="//*[local-name()='endereco.numero']"/>
+						<!--
+						<arg evaluator="xml" expression="//*[local-name()='endereco.complemento']"/>
+						-->
+						<arg evaluator="xml" expression="get-property('complemento')"/>
+						<arg evaluator="xml" expression="//*[local-name()='endereco.bairro']"/>
+						<arg evaluator="xml" expression="//*[local-name()='endereco.municipio']"/>
+						<arg evaluator="xml" expression="//*[local-name()='endereco.uf']"/>
+					</args>
+				</payloadFactory>
+				<log category="INFO" level="full"/>
+				<call blocking="true">
+					<endpoint key="PostClientes"/>
+				</call>
+			</sequence>
+		</target>
+	</iterate>
+</sequence>

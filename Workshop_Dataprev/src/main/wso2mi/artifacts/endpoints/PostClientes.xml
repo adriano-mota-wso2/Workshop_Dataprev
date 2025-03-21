@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="PostClientes" xmlns="http://ws.apache.org/ns/synapse">
+	<http method="post" statistics="enable" uri-template="https://localhost:8243/pocapimiddeware-clientes/1.0/">
+		<timeout>
+			<duration>60000</duration>
+		</timeout>
+		<suspendOnFailure>
+			<initialDuration>-1000</initialDuration>
+			<progressionFactor>2</progressionFactor>
+			<maximumDuration>60000</maximumDuration>
+		</suspendOnFailure>
+		<markForSuspension>
+			<retriesBeforeSuspension>3</retriesBeforeSuspension>
+			<retryDelay>1</retryDelay>
+		</markForSuspension>
+		<authentication>
+			<oauth>
+				<clientCredentials>
+					<clientId>uPO2w0Ry_JOMi1FEj_CZfywHRoEa</clientId>
+					<clientSecret>w_3eZUkEtPxqvbWPFDnTOxR2SjMa</clientSecret>
+					<tokenUrl>https://localhost:9443/oauth2/token</tokenUrl>
+					<authMode>Header</authMode>
+				</clientCredentials>
+			</oauth>
+		</authentication>
+	</http>
+</endpoint>

@@ -1,0 +1,33 @@
+<data name="FileDataService" serviceNamespace="" serviceGroup="" transports="http https" disableStreaming="true">
+    <description/>
+    <config id="CSVFileDataSource">
+        <property name="csv_hasheader">true</property>
+        <property name="csv_datasource">/Users/adrianomota/workspace/wso2_mi/vscode/Workshop_Dataprev/middleware_clientes_2.csv</property>
+        <property name="csv_columnseperator">,</property>
+        <property name="csv_startingrow">2</property>
+        <property name="csv_headerrow">1</property>
+    </config>
+    <query id="Q1" useConfig="CSVFileDataSource">
+		<result element="Clientes" rowName="Cliente">
+			<element column="_id" name="_id" xsdType="string"/>
+			<element column="matricula" name="matricula" xsdType="string"/>
+			<element column="tipoDocumento" name="tipoDocumento" xsdType="string"/>
+			<element column="nome" name="nome" xsdType="string"/>
+			<element column="numeroDocumento" name="numeroDocumento" xsdType="string"/>
+			<element column="email" name="mail" xsdType="string"/>
+			<element column="endereco.cep" name="endereco.cep" xsdType="string"/>
+			<element column="endereco.logradouro" name="endereco.logradouro" xsdType="string"/>
+			<element column="endereco.complemento" name="endereco.complemento" xsdType="string"/>
+			<element column="endereco.bairro" name="endereco.bairro" xsdType="string"/>
+			<element column="endereco.numero" name="endereco.numero" xsdType="string"/>
+			<element column="endereco.municipio" name="endereco.municipio" xsdType="string"/>
+			<element column="endereco.uf" name="endereco.uf" xsdType="string"/>
+		</result>
+	</query>
+	<resource method="GET" path="ReadFile">
+		<call-query href="Q1"/>
+	</resource>
+	<operation name="ReadFile">
+		<call-query href="Q1"/>
+	</operation>
+</data>

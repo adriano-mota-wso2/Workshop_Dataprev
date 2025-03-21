@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/readfileapi" name="ReadFileAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/clientes">
+		<inSequence>
+			<sequence key="ReadFileSequence"/>
+			<respond/>
+		</inSequence>
+		<faultSequence>
+		</faultSequence>
+		 
+
+	</resource>
+</api>

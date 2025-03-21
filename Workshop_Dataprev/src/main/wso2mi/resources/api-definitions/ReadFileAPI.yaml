@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: ReadFileAPI
+  description: API Definition of ReadFileAPI
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/readfileapi
+paths:
+  /clientes:
+    get:
+      responses:
+        default:
+          description: Default response
