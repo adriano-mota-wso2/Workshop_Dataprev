@@ -1,0 +1,91 @@
+<data name="EmployeeDataServices" serviceNamespace="" serviceGroup="" transports="http" disableStreaming="true">
+    <description/>
+    <config id="PostgresSQLDataSource">
+        <property name="driverClassName">org.postgresql.Driver</property>
+        <property name="url">jdbc:postgresql://localhost:5432/Employees</property>
+        <property name="username">postgres</property>
+        <property name="password">mysecretpassword</property>
+    </config>
+    <query id="GetAllEmployees" useConfig="PostgresSQLDataSource">
+        <sql>select Employeenumber, FirstName, LastName, Email, Salary from Employees;</sql>
+    <result outputType="json">{
+            "Employees":{
+            "Employee":[
+            {
+            "EmployeeNumber":"$EmployeeNumber",
+            "FirstName":"$FirstName",
+            "LastName":"$LastName",
+            "Email":"$Email",
+            "Salary":"$Salary"
+            }
+            ]
+            }
+            }</result>
+    </query>
+    <resource method="GET" path="Employees">
+        <call-query href="GetAllEmployees"/>
+    </resource>
+    <query id="get_employeesemployeenumber_query" useConfig="PostgresSQLDataSource">
+        <sql>select Employeenumber, FirstName, LastName, Email, Salary from Employees where Employeenumber = ?;</sql>
+        <param name="Employeenumber" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+    <result outputType="json">{
+            "Employees":{
+            "Employee":[
+            {
+            "EmployeeNumber":"$EmployeeNumber",
+            "FirstName":"$FirstName",
+            "LastName":"$LastName",
+            "Email":"$Email",
+            "Salary":"$Salary"
+            }
+            ]
+            }
+            }</result>
+    </query>
+    <resource method="GET" path="Employees/{Employeenumber}" disableStreaming="true">
+        <call-query href="get_employeesemployeenumber_query">
+            <with-param name="Employeenumber" query-param="Employeenumber"/>
+        </call-query>
+    </resource>
+    <query id="post_employees_query" useConfig="PostgresSQLDataSource" keyColumns="Employeenumber">
+        <sql>INSERT INTO Employees (FirstName, LastName, Email, Salary) VALUES (?,?,?,?);</sql>
+        <param name="FirstName" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="LastName" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="Email" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="Salary" paramType="SCALAR" sqlType="STRING" type="IN"/>
+    </query>
+    <resource method="POST" path="Employees" disableStreaming="true">
+        <call-query href="post_employees_query">
+            <with-param name="FirstName" query-param="FirstName"/>
+            <with-param name="LastName" query-param="LastName"/>
+            <with-param name="Email" query-param="Email"/>
+            <with-param name="Salary" query-param="Salary"/>
+        </call-query>
+    </resource>
+    <query id="put_employees_query" useConfig="PostgresSQLDataSource" returnUpdatedRowCount="true">
+        <sql>UPDATE Employees set LastName=?, FirstName=?, Email=?, Salary=? where EmployeeNumber::text=?;</sql>
+        <param name="FirstName" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="LastName" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="Email" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="Salary" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="EmployeeNumber" paramType="SCALAR" sqlType="STRING" type="IN"/>
+    </query>
+    <resource method="PUT" path="Employees" disableStreaming="true">
+        <call-query href="put_employees_query">
+            <with-param name="FirstName" query-param="FirstName"/>
+            <with-param name="LastName" query-param="LastName"/>
+            <with-param name="Email" query-param="Email"/>
+            <with-param name="Salary" query-param="Salary"/>
+            <with-param name="EmployeeNumber" query-param="EmployeeNumber"/>
+        </call-query>
+    </resource>
+    <query id="delete_employeesemployeenumber_query" useConfig="PostgresSQLDataSource" returnUpdatedRowCount="true">
+        <sql>DELETE FROM Employees WHERE Employeenumber=?;</sql>
+        <param name="EmployeeNumber" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+    </query>
+    <resource method="DELETE" path="Employees/{EmployeeNumber}" disableStreaming="true">
+        <call-query href="delete_employeesemployeenumber_query">
+            <with-param name="EmployeeNumber" query-param="EmployeeNumber"/>
+        </call-query>
+    </resource>
+</data>
