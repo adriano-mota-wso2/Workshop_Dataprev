@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="GetProposalByID" xmlns="http://ws.apache.org/ns/synapse">
+    <http method="get" statistics="enable" trace="enable" uri-template="http://adriano.local:8290/services/HondaDemoDataServices/proposalById/{ProposalID}">
+        <suspendOnFailure>
+            <initialDuration>-1</initialDuration>
+            <progressionFactor>1</progressionFactor>
+        </suspendOnFailure>
+        <markForSuspension>
+            <retriesBeforeSuspension>0</retriesBeforeSuspension>
+        </markForSuspension>
+    </http>
+</endpoint>

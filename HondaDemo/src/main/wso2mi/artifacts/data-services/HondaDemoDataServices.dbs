@@ -1,0 +1,105 @@
+<data name="HondaDemoDataServices" serviceNamespace="" serviceGroup="" transports="http https" disableStreaming="true">
+    <description/>
+    <config id="HondaDemoDataSource">
+        <property name="driverClassName">org.postgresql.Driver</property>
+        <property name="url">jdbc:postgresql://localhost:5432/DemoDB</property>
+        <property name="username">postgres</property>
+        <property name="password">mysecretpassword</property>
+    </config>
+    <query id="getproposals_query" useConfig="HondaDemoDataSource">
+        <sql>SELECT id, description, "date"
+            FROM proposal where flgok is false;</sql>
+        <result element="Proposals" rowName="Proposal">
+            <element name="id" column="id" xsdType="string" exportType="Scalar" requiredRoles=""/>
+            <element name="description" column="description" xsdType="string" exportType="Scalar" requiredRoles=""/>
+            <element name="date" column="date" xsdType="string" exportType="Scalar" requiredRoles=""/>
+        </result>
+    </query>
+    <operation name="getProposals" disableStreaming="true">
+        <call-query href="getproposals_query"/>
+    </operation>
+    <query id="put_proposaldbid_query" useConfig="HondaDemoDataSource" returnUpdatedRowCount="true">
+        <sql>update proposal set flgok = true where id::text=?;</sql>
+        <param name="ProposalID" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="ProposalDescription" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="ProposalDate" paramType="SCALAR" sqlType="STRING" type="IN"/>
+    </query>
+    <resource method="PUT" path="proposalDB" disableStreaming="true">
+        <call-query href="put_proposaldbid_query">
+            <with-param name="ProposalID" query-param="ProposalID"/>
+            <with-param name="ProposalDescription" query-param="ProposalDescription"/>
+            <with-param name="ProposalDate" query-param="ProposalDate"/>
+        </call-query>
+    </resource>
+    <query id="post_proposaldb_query" useConfig="HondaDemoDataSource" returnGeneratedKeys="true" keyColumns="id" returnUpdatedRowCount="true">
+        <sql>INSERT INTO proposal
+            (description, date, flgok)
+            VALUES(?, ?, false);</sql>
+        <param name="ProposalDescription" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <param name="ProposalDate" paramType="SCALAR" sqlType="STRING" type="IN"/>
+    </query>
+    <resource method="POST" path="proposalDB" disableStreaming="true">
+        <call-query href="post_proposaldb_query">
+            <with-param name="ProposalDescription" query-param="ProposalDescription"/>
+            <with-param name="ProposalDate" query-param="ProposalDate"/>
+        </call-query>
+    </resource>
+    <query id="get_proposaldb_query" useConfig="HondaDemoDataSource">
+        <sql>SELECT id, description, "date", flgok
+            FROM proposal;</sql>
+        <result outputType="json">
+            {
+            "Proposals":{
+            "Proposal":[
+            {
+            "ProposalID":"$id",
+            "ProposalDescription":"$description",
+            "ProposalDate":"$date",
+            "ProposalFlag":"$flgok"
+            }
+            ]
+            }
+            }
+        </result>
+    </query>
+    <resource method="GET" path="proposalDB" returnRequestStatus="true">
+        <call-query href="get_proposaldb_query"/>
+    </resource>
+    <query id="get_proposaldball_query" useConfig="HondaDemoDataSource">
+        <sql>SELECT id, description, date, flgok
+            FROM proposal;</sql>
+        <result outputType="json">
+            {
+            "Proposals":{
+            "Proposal":[
+            {
+            "ProposalID":"$id",
+            "ProposalDescription":"$description",
+            "ProposalDate":"$date",
+            "ProposalFlag":"$flgok"
+            }
+            ]
+            }
+            }
+        </result>
+    </query>
+    <resource method="GET" path="proposalDBAll" disableStreaming="true">
+        <call-query href="get_proposaldball_query"/>
+    </resource>
+    <query id="get_proposalbyidproposalid_query" useConfig="HondaDemoDataSource">
+        <sql>SELECT id, description, date, flgok
+            FROM proposal where id::text=?</sql>
+        <param name="ProposalID" paramType="SCALAR" sqlType="STRING" type="IN"/>
+        <result outputType="json">
+            { "Proposals":{ "Proposal":[ { "ProposalID":"$id", "ProposalDescription":"$description", "ProposalDate":"$date", "ProposalFlag":"$flgok" } ] } }
+        </result>
+    </query>
+    <resource method="GET" path="proposalById/{ProposalID}" disableStreaming="true">
+        <call-query href="get_proposalbyidproposalid_query">
+            <with-param name="ProposalID" query-param="ProposalID"/>
+        </call-query>
+    </resource>
+    <query id="get_xxxx_query" useConfig="HondaDemoDataSource">
+        <sql></sql>
+    </query>
+</data>

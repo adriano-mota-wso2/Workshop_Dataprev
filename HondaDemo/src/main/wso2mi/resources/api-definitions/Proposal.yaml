@@ -1,0 +1,39 @@
+openapi: 3.0.1
+info:
+  title: Proposal
+  description: API Definition of Proposal
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/proposal
+paths:
+  /CreateProposal:
+    post:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response
+  /GetProposalList:
+    get:
+      responses:
+        default:
+          description: Default response
+  /GetProposal/{ProposalID}:
+    get:
+      parameters:
+      - name: ProposalID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response

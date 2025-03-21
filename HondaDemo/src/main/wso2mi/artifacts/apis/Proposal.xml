@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/proposal" name="Proposal" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/CreateProposal">
+        <inSequence>
+            <property name="ContentType" value="application/json" scope="axis2"/>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <log level="full"/>
+            <property name="ProposalID" expression="json-eval($.ProposalInfo.ProposalID)" scope="default" type="STRING"/>
+            <property name="ProposalDescription" expression="json-eval($.ProposalInfo.ProposalDescription)" scope="default" type="STRING"/>
+            <property name="ProposalDate" expression="json-eval($.ProposalInfo.ProposalDate)" scope="default" type="STRING"/>
+            <log level="custom">
+                <property name="Received Proposal ID" expression="$ctx:ProposalID"/>
+                <property name="Received Proposal Description" expression="$ctx:ProposalDescription"/>
+                <property name="Received Proposal Date" expression="$ctx:ProposalDate"/>
+            </log>
+            <call>
+                <endpoint key="CreateProposal"/>
+                <source type="body"/>
+                <target type="body"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <log level="full"/>
+            <respond/>
+        </faultSequence>
+    </resource>
+    <resource methods="GET" uri-template="/GetProposalList">
+        <inSequence>
+            <call>
+                <endpoint key="GetProposals"/>
+                <source type="body"/>
+                <target type="body"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <log level="full"/>
+            <respond/>
+        </faultSequence>
+    </resource>
+    <resource methods="GET" uri-template="/GetProposal/{ProposalID}">
+        <inSequence>
+            <property name="ProposalID" expression="get-property('uri.var.ProposalID')"></property>
+            <property expression="concat('http://adriano.local:8290/services/HondaDemoDataServices/proposalById/', get-property('uri.var.ProposalID'))" name="uri.var.newUrl" scope="default" type="STRING"/>
+            <call>
+                <endpoint>
+                    <http method="get" uri-template="{uri.var.newUrl}"/>
+                </endpoint>
+            </call>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource></api>

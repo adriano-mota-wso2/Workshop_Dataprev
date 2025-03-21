@@ -1,0 +1,41 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="HondaVehicles" context="/hondavehicles">
+    <resource methods="GET" uri-template="/list?type={type}">
+        <inSequence>
+            <property name="type" expression="get-property('uri.var.type')" scope="default" type="STRING"/>
+            <switch source="$ctx:type">
+                <case regex="cars">
+                    <call>
+                        <endpoint>
+                            <http method="get" uri-template="http://localhost:8280/hondavehiclels/1/list/vehicles"/>
+                        </endpoint>
+                    </call>
+                </case>
+                <case regex="motorcycles">
+                    <call>
+                        <endpoint>
+                            <http method="get" uri-template="http://localhost:8280/hondavehiclels/1/list/motorcycles"/>
+                        </endpoint>
+                    </call>
+                </case>
+                <default>
+                    <payloadFactory media-type="json">
+                        <format>{"error": "Invalid or missing type parameter. Please specify 'cars' or 'motorcycles'."}</format>
+                        <args/>
+                    </payloadFactory>
+                    <respond/>
+                </default>
+            </switch>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <log level="custom">
+                <property name="ERROR" value="An error occurred in HondaVehicles API"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{"error": "Internal server error occurred."}</format>
+                <args/>
+            </payloadFactory>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>

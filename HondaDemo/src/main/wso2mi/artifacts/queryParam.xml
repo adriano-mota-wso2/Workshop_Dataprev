@@ -1,0 +1,28 @@
+<resource methods="GET" uri-template="/GetProposals?param={param}">
+    <inSequence>
+        <property name="queryParam" expression="get-property('uri.var.param')" scope="default" type="STRING"/>
+        <filter source="boolean($ctx:queryParam)" regex="true">
+            <then>
+                <log level="custom">
+                    <property name="message" value="Query parameter is provided. Calling GetProposals endpoint."/>
+                </log>
+                <call>
+                    <endpoint key="GetProposals"/>
+                </call>
+            </then>
+            <else>
+                <log level="custom">
+                    <property name="message" value="Query parameter is not provided. Calling another endpoint."/>
+                </log>
+                <call>
+                    <endpoint key="AnotherEndpointKey"/> <!-- Replace with actual endpoint key -->
+                </call>
+            </else>
+        </filter>
+        <respond/>
+    </inSequence>
+    <faultSequence>
+        <log level="full"/>
+        <respond/>
+    </faultSequence>
+</resource>

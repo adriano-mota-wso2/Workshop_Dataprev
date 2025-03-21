@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="GetDBDataTaskSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <dataServiceCall serviceName="HondaDemoDataServices">
+        <operations type="single">
+            <operation name="getProposals">
+            </operation>
+        </operations>
+        <source type="inline"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property expression="$body" name="listProposals" scope="default" type="OM"/>
+
+    <iterate expression="//*[local-name()='Proposal']" id="itd" sequential="true">
+        <target>
+            <sequence>
+                <property name="id" expression="//*[local-name()='id']" scope="default" type="STRING"/>
+                <property name="description" expression="//*[local-name()='description']" scope="default" type="STRING"/>
+                <property name="date" expression="//*[local-name()='date']" scope="default" type="STRING"/>
+
+                <payloadFactory media-type="json">
+                    <format>{
+                        "ProposalInfo":{
+                        "ProposalID": "$1",
+                        "ProposalDescription": "$2",
+                        "ProposalDate": "$3"
+                        }
+                        }</format>
+                    <args>
+                        <arg evaluator="xml" expression="$ctx:id"/>
+                        <arg evaluator="xml" expression="$ctx:description"/>
+                        <arg evaluator="xml" expression="$ctx:date"/>
+                    </args>
+                </payloadFactory>
+
+                <log level="custom">
+                    <property name="Generated JSON Payload" expression="json-eval($)"/>
+                </log>
+                <call>
+                    <endpoint key="UpdatePropostal"/>
+                    <source type="body"/>
+                    <target type="body"/>
+                </call>
+            </sequence>
+        </target>
+    </iterate>
+</sequence>
