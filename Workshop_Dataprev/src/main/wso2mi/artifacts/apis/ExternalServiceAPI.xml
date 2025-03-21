@@ -1,0 +1,16 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="ExternalServiceAPI" context="/externalService">
+    <resource methods="GET" uri-template="/call">
+        <inSequence>
+            <call>
+                <endpoint key="ExternalEndpoint"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <log level="custom">
+                <property name="ERROR" value="An error occurred"/>
+            </log>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>
